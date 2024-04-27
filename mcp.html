@@ -1,0 +1,95 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>DL PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+
+        def mcculloch_pitts_neuron(weights, threshold, inputs):
+             weighted_sum = sum(w * i for w, i in zip(weights, inputs))
+             return 1 if weighted_sum >= threshold else 0
+    
+        def logic_gate(inputs, gate_type):
+            if gate_type == 'AND':
+                if len(inputs) == 2:
+                    weights = [1, 1]
+                    threshold = 1.1
+                    return mcculloch_pitts_neuron(weights, threshold, inputs)
+                elif len(inputs) == 3:
+                    weights = [1, 1, 1]
+                    threshold = 1.5
+                    return mcculloch_pitts_neuron(weights, threshold, inputs)
+            elif gate_type == 'OR':
+                if len(inputs) == 2:
+                    weights = [1, 1]
+                    threshold = 1
+                    return mcculloch_pitts_neuron(weights, threshold, inputs)
+                elif len(inputs) == 3:
+                    weights = [1, 1, 1]
+                    threshold = 1
+                    return mcculloch_pitts_neuron(weights, threshold, inputs)
+            elif gate_type == 'NOR':
+                if len(inputs) == 2:
+                    weights = [-1, -1]
+                    threshold = -0.5
+                    return mcculloch_pitts_neuron(weights, threshold, inputs)
+                elif len(inputs) == 3:
+                    weights = [-1, -1, -1]
+                    threshold = -1
+                    return mcculloch_pitts_neuron(weights, threshold, inputs)
+            elif gate_type == 'NOT':
+                weights = [-1]
+                threshold = -0.5
+                return mcculloch_pitts_neuron(weights, threshold, [inputs[0]])
+            elif gate_type == 'NAND':
+                if len(inputs) == 2:
+                    weights = [-1, -1]
+                    threshold = -1.1
+                    return mcculloch_pitts_neuron(weights, threshold, inputs)
+                elif len(inputs) == 3:
+                    weights = [-1, -1, -1]
+                    threshold = -1.5
+                    return mcculloch_pitts_neuron(weights, threshold, inputs)
+            else:
+                raise ValueError("Invalid gate type")
+        
+        # Example usage:
+        def get_input_values():
+            while True:
+                num_inputs = input("Enter the number of inputs (2 or 3): ")
+                if num_inputs in ['2', '3']:
+                    return int(num_inputs)
+                else:
+                    print("Invalid input. Please enter either 2 or 3.")
+        
+        def get_user_input(num_inputs):
+            while True:
+                user_input = input(f"Enter {num_inputs} input values (0/1 separated by spaces): ")
+                elements = user_input.split()
+                if len(elements) == num_inputs:
+                    return [int(element) for element in elements]
+                else:
+                    print(f"Please enter {num_inputs} values.")
+        
+        def get_gate_type():
+            while True:
+                gate_type = input("Enter the LOGIC GATE required (AND, OR, NOR, NOT, NAND): ")
+                if gate_type.upper() in ['AND', 'OR', 'NOR', 'NOT', 'NAND']:
+                    return gate_type.upper()
+                else:
+                    print("Invalid gate type. Please choose from AND, OR, NOR, NOT, NAND.")
+        
+        num_inputs = get_input_values()
+        input_set = get_user_input(num_inputs)
+        gate_type = get_gate_type()
+        result = logic_gate(input_set, gate_type)
+        print(f"{gate_type} Gate:", result)
+    
+    </pre>
+
+</body>
+</html>
